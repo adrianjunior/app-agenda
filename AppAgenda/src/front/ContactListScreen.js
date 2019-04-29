@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Container, Button, Text, Icon, StyleProvider } from 'native-base';
 import material from '../../native-base-theme/variables/material';
 import getTheme from '../../native-base-theme/components';
+import { Navigation } from 'react-native-navigation';
 
 import UserListView from "./components/UserListView";
 
@@ -37,16 +38,34 @@ export default class ContactListScreen extends Component {
         super(props);
     }
 
-    goToAddUser = () => {}
+    goToAddUser = () => {
+        Navigation.push(this.props.componentId, {
+            component: {
+              name: 'AddContactScreen',
+              passProps: {
+                  user: {name: '', phone: '', email: ''}
+              }
+            }
+        });
+    }
 
-    goToViewUse = () => {}
+    goToViewUser = (index) => {
+        Navigation.push(this.props.componentId, {
+            component: {
+              name: 'ViewContactScreen',
+              passProps: {
+                  user: this.state.users[index]
+              }
+            }
+        });
+    }
 
     deleteUser = () => {}
     
     render() {
         let content;
         if(this.state.users.length > 0) {
-            content = <UserListView users={this.state.users}/>
+            content = <UserListView users={this.state.users} viewUser={this.goToViewUser}/>
         } else {
             content = <Container>
                         <Text>Você não possui contatos cadastrados!</Text>
@@ -57,31 +76,12 @@ export default class ContactListScreen extends Component {
             <StyleProvider style={getTheme(material)}>
                 <Container>
                     {content}
-                    <Button full info>
+                    <Button full success onPress={this.goToAddUser}>
                         <Icon name="add"/>
-                        <Text>Adicionar Contato</Text>
+                        <Text>Cadastrar Novo Contato</Text>
                     </Button>
                 </Container>
             </StyleProvider>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    },
-    instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-    },
-});
