@@ -36,15 +36,15 @@ export default class ContactListScreen extends Component {
 
 
   updateName = (e) => {
-    this.setState({name: e.target.value})
+    this.setState({name: e.nativeEvent.text})
   }
 
   updateEmail = (e) => {
-    this.setState({email: e.target.value})
+    this.setState({email: e.nativeEvent.text})
   }
 
   updatePhone = (e) => {
-    this.setState({phone: e.target.value})
+    this.setState({phone: e.nativeEvent.text})
   }
 
   addContact = () => {
@@ -58,15 +58,15 @@ export default class ContactListScreen extends Component {
           <Form style={styles.form}>
             <Item floatingLabel>
                 <Label>Nome</Label>
-                <Input value={this.state.name} onChange={this.updateName} />
+                <Input type="text" value={this.state.name} onChange={this.updateName} />
             </Item>
             <Item floatingLabel>
                 <Label>Email</Label>
-                <Input value={this.state.email} onChange={this.updateEmail} />
+                <Input type="email" value={this.state.email} onChange={this.updateEmail} />
             </Item>
             <Item floatingLabel last>
                 <Label>Telefone</Label>
-                <Input value={this.state.phone} onChange={this.updatePhone} />
+                <Input type="phone" value={this.state.phone} onChange={this.updatePhone} />
             </Item>
           </Form>
           <View style={styles.buttons}>
