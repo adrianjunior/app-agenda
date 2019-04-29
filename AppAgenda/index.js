@@ -1,8 +1,9 @@
 import { Navigation } from "react-native-navigation";
+import { Root } from 'native-base';
 
-import ContactListScreen from "./src/front/ContactListScreen";
-import ViewContactScreen from "./src/front/ViewContactScreen";
-import AddContactScreen from "./src/front/AddContactScreen";
+import ContactListScreen from "./src/ContactListScreen";
+import ViewContactScreen from "./src/ViewContactScreen";
+import AddContactScreen from "./src/AddContactScreen";
 
 Navigation.registerComponent(`ContactListScreen`, () => ContactListScreen);
 Navigation.registerComponent(`ViewContactScreen`, () => ViewContactScreen);
