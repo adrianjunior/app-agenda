@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "171946624398",
+    "firebase_url": "https://appagenda-743cb.firebaseio.com",
+    "project_id": "appagenda-743cb",
+    "storage_bucket": "appagenda-743cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171946624398:android:4c718429d89d7b56",
+        "android_client_info": {
+          "package_name": "com.appagenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171946624398-rr843laqlleejnbalhntdmb4nne6q5s1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4sg2o08w3s3VMPM8G9-sl-00628-jzys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171946624398-rr843laqlleejnbalhntdmb4nne6q5s1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

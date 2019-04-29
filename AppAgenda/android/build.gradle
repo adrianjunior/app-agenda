@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 28
         targetSdkVersion = 28
         supportLibVersion = "28.0.0"
+        googlePlayServicesVersion = "16.0.1"
     }
     repositories {
         google()
@@ -16,7 +17,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
-
+        classpath 'com.google.gms:google-services:4.2.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -33,6 +34,15 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
         maven { url 'https://jitpack.io' }
+        configurations.all {
+            resolutionStrategy {
+                // react-native-google-analytics-bridge
+                force "com.google.android.gms:play-services-analytics:16.0.1"
+                force "com.google.android.gms:play-services-tagmanager-v4-impl:16.0.1"
+				// react-native-device-info
+                force "com.google.android.gms:play-services-gcm:15.0.0"
+            }
+        }
     }
 }
 
