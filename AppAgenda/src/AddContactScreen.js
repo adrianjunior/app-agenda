@@ -27,7 +27,9 @@ export default class ContactListScreen extends Component {
     phone: '',
     id: '',
     loading: false,
-    isAdd: true
+    isAdd: true,
+    isEmailOk: false,
+    isPhoneOk: false
   }
 
   static options(passProps) {
@@ -62,21 +64,78 @@ export default class ContactListScreen extends Component {
   }
 
   updateEmail = (e) => {
-    this.setState({email: e.nativeEvent.text})
+    const email = e.nativeEvent.text
+    this.setState({email: email})
+    if(this.checkEmail){
+      this.setState({isEmailOk: true})
+    } else {
+      this.setState({isEmailOk: false})
+    }
   }
 
   updatePhone = (e) => {
-    this.setState({phone: e.nativeEvent.text})
+    const phone = e.nativeEvent.text
+    this.setState({phone: phone})
+    if(this.checkPhone){
+      this.setState({isPhoneOk: true})
+    } else {
+      this.setState({isPhoneOk: false})
+    }
+  }
+
+  validateEmail = () => {
+    if(!this.checkEmail){
+      Toast.show({
+        text: 'O email não está no formato adequado.',
+        buttonText: 'Ok'
+      })
+      this.setState({isEmailOk: false})
+    } else {
+      this.setState({isEmailOk: true})
+    }
+  }
+
+  validatePhone = () => {
+    if(!this.checkPhone) {
+      Toast.show({
+        text: 'O número de telefone deve conter ao menos 8 dígitos.',
+        buttonText: 'Ok'
+      })
+      this.setState({isPhoneOK: false})
+    } else {
+      this.setState({isPhoneOK: true})
+    }
+  }
+
+  checkEmail = () => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(reg.test(this.state.email) === false){
+      return false
+    } else {
+      return true
+    }
+  }
+
+  checkPhone = () => {
+    if(this.state.phone.length < 8){
+      return false
+    } else {
+      return true
+    }
   }
 
   //Firebase
   addContact = () => {
     //Checa se os campos estão preenchidos
-    if(this.state.name != '' && (this.state.email !='' || this.state.phone !='')) {
+    if(this.state.name != '' && (this.state.isEmailOk || this.state.isPhoneOk)) {
       this.setState({loading: true})
       //Checa se é um cadastro ou uma edição
       if(this.state.isAdd) {
         //Adicionando
+        if(!this.state.isPhoneOk) 
+          this.setState({phone: ''})
+        if(!this.state.isEmailOk)
+          this.setState({email: ''})
         this.contactsRef.add({
           name: this.state.name,
           email: this.state.email,
@@ -118,7 +177,7 @@ export default class ContactListScreen extends Component {
       }
     } else {
       Toast.show({
-        text: 'Um contato deve ter um nome e, pelo menos, um email ou número.',
+        text: 'Um contato deve ter um nome e, pelo menos, um email ou número válidos.',
         buttonText: 'Ok'
       })
     }
@@ -154,12 +213,12 @@ export default class ContactListScreen extends Component {
                     <Item inlineLabel>
                         <Icon style={styles.icons} name="mail"/>
                         <Label>Email</Label>
-                        <Input keyboardType={"email-address"} value={this.state.email} onChange={this.updateEmail} />
+                        <Input keyboardType={"email-address"} value={this.state.email} onChange={this.updateEmail} onBlur={this.validateEmail} />
                     </Item>
                     <Item inlineLabel>
                         <Icon style={styles.icons} name="call"/>
                         <Label>Telefone</Label>
-                        <Input keyboardType={"phone-pad"} value={this.state.phone} onChange={this.updatePhone} />
+                        <Input keyboardType={"phone-pad"} value={this.state.phone} onChange={this.updatePhone} onBlur={this.validatePhone} />
                     </Item>
                   </Form>
                   <View style={styles.buttons}>
