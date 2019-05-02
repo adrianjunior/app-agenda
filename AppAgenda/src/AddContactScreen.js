@@ -163,11 +163,11 @@ export default class ContactListScreen extends Component {
     let buttonIcon
     let buttonLabel
     if(this.state.isAdd) {
-      spinnerLabel = 'Adicion'
+      spinnerLabel = 'Adicionando Contato...'
       icon = 'add'
       button = 'Adicionar Contato'
     } else {
-      spinnerLabel = 'Edit'
+      spinnerLabel = 'Editando Contato...'
       icon = 'checkmark'
       button = 'Salvar Alterações'
     }

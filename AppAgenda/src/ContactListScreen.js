@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import { StyleSheet, View, FlatList, TouchableWithoutFeedback } from 'react-native';
-import { Container, Text, Icon, StyleProvider, Root, Spinner, Item, Header, Input, Button } from 'native-base';
+import { StyleSheet, View } from 'react-native';
+import { Container, Text, Icon, StyleProvider, Root, Header, Button } from 'native-base';
 import material from '../native-base-theme/variables/material';
 import getTheme from '../native-base-theme/components';
 import firebase from 'react-native-firebase';
 import { Navigation } from 'react-native-navigation';
 
-import UserListItem from "./components/UserListItem";
+import UserList from "./components/UserList";
+import Spinner from "./components/Spinner";
+import SearchBar from "./components/SearchBar"
 
 export default class ContactListScreen extends Component {
 
@@ -125,23 +127,15 @@ export default class ContactListScreen extends Component {
         if(!this.state.loading) {
             if(this.state.users.length > 0) {
                 searchBar = <Header searchBar rounded info>
-                                <Item>
-                                    <Icon name="search" />
-                                    <Input placeholder="Buscar Contato" onChange={this.updateSearch} value={this.state.search}/>
-                                    <TouchableWithoutFeedback onPress={this.resetSearch}>
-                                        <Icon name={this.state.searchBarIcon} />
-                                    </TouchableWithoutFeedback>
-                                </Item>
+                                <SearchBar searchIcon="search"
+                                           placeholder="Buscar Contato"
+                                           update={this.updateSearch}
+                                           value={this.state.search}
+                                           onPressClose={this.resetSearch}
+                                           iconName={this.state.searchBarIcon}/>
                             </Header>
-                content =   <FlatList 
-                                data={this.state.users.filter(user => user.name.includes(this.state.search))} 
-                                renderItem={({item}) => <UserListItem
-                                                            userName={item.name}
-                                                            onItemPressed = {() => this.goToViewUser(item)}
-                                                        />
-                                            }
-                                keyExtractor={(item, index) => index.toString()}
-                            />
+                content = <UserList data={this.state.users}
+                                    searchState={this.state.search}/>
             } else {
                 searchBar = null
                 content = <Container style={styles.center}>
@@ -151,10 +145,9 @@ export default class ContactListScreen extends Component {
             }
         } else {
             searchBar = null
-            content = <Container style={styles.center}>
-                        <Spinner/>
-                        <Text>Carregando Contatos...</Text>
-                      </Container>
+            content = <Spinner style={styles.center}
+                               label="Carregando Contatos"/>
+
         }
         return (
             <Root>
