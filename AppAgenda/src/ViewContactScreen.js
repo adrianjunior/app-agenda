@@ -8,7 +8,7 @@ import { Navigation } from 'react-native-navigation';
 
 import UserView from './components/UserView';
 
-export default class ViewContactScreenn extends Component {
+export default class ViewContactScreen extends Component {
 
   constructor(props) {
     super(props);

@@ -1,5 +1,4 @@
 import { Navigation } from "react-native-navigation";
-import { Root } from 'native-base';
 
 import ContactListScreen from "./src/ContactListScreen";
 import ViewContactScreen from "./src/ViewContactScreen";

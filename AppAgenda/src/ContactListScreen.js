@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
-import { Container, Button, Text, Icon, StyleProvider, Root, Spinner, Item, Header, Input } from 'native-base';
+import { StyleSheet, View, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { Container, Text, Icon, StyleProvider, Root, Spinner, Item, Header, Input, Button } from 'native-base';
 import material from '../native-base-theme/variables/material';
 import getTheme from '../native-base-theme/components';
 import firebase from 'react-native-firebase';
@@ -27,7 +27,8 @@ export default class ContactListScreen extends Component {
     state = {
         users: [],
         loading: true,
-        search: ''
+        search: '',
+        searchBarIcon: 'people'
     }
 
     static options(passProps) {
@@ -74,7 +75,19 @@ export default class ContactListScreen extends Component {
     }
 
     updateSearch = (e) => {
-        this.setState({search: e.nativeEvent.text})
+        text =  e.nativeEvent.text
+        if(text.length >= 1) {
+            this.setState({searchBarIcon: 'close'})
+        } else {
+            this.setState({searchBarIcon: 'people'})
+        }
+        this.setState({search: text})
+    }
+
+    resetSearch = () => {
+        if(this.state.searchBarIcon === 'close') {
+            this.setState({search: '', searchBarIcon: 'people'})
+        }
     }
 
     onCollectionUpdate = (querySnapshot) => {
@@ -114,8 +127,10 @@ export default class ContactListScreen extends Component {
                 searchBar = <Header searchBar rounded info>
                                 <Item>
                                     <Icon name="search" />
-                                    <Input placeholder="Buscar Contato" onChange={this.updateSearch}/>
-                                    <Icon name="people" />
+                                    <Input placeholder="Buscar Contato" onChange={this.updateSearch} value={this.state.search}/>
+                                    <TouchableWithoutFeedback onPress={this.resetSearch}>
+                                        <Icon name={this.state.searchBarIcon} />
+                                    </TouchableWithoutFeedback>
                                 </Item>
                             </Header>
                 content =   <FlatList 
