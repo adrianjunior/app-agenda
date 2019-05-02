@@ -146,7 +146,7 @@ export default class ContactListScreen extends Component {
         } else {
             searchBar = null
             content = <Spinner style={styles.center}
-                               label="Carregando Contatos"/>
+                               label="Carregando Contatos..."/>
 
         }
         return (

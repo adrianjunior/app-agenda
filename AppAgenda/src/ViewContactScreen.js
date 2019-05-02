@@ -6,6 +6,7 @@ import getTheme from '../native-base-theme/components';
 import firebase from 'react-native-firebase';
 import { Navigation } from 'react-native-navigation';
 
+import Spinner from "./components/Spinner";
 import UserView from './components/UserView';
 
 export default class ViewContactScreen extends Component {
@@ -111,10 +112,8 @@ export default class ViewContactScreen extends Component {
     if(!this.state.loading) {
       content = <UserView user={this.state.user} />
     } else {
-      content = <Container style={styles.loading}>
-                  <Spinner/>
-                  <Text>Carregando Informações...</Text>
-                </Container>
+      content = <Spinner style={styles.center}
+                         label="Carregando Informações..."/>
     }
     return (
       <Root>
